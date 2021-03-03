@@ -6,12 +6,16 @@
     @open="handleOpen"
     @close="handleClose">
       <el-menu-item index="1" @click="goTo('predict')">
-        <i class="el-icon-document"></i>
+        <i class="el-icon-data-line"></i>
         <span slot="title">病情预测</span>
       </el-menu-item>
       <el-menu-item index="2" @click="goTo('map')">
         <i class="el-icon-info"></i>
         <span slot="title">知识图谱</span>
+      </el-menu-item>
+      <el-menu-item index="3" @click="goTo('history')">
+        <i class="el-icon-document"></i>
+        <span slot="title">历史记录</span>
       </el-menu-item>
     </el-menu>
   </el-aside>

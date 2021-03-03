@@ -23,6 +23,10 @@ export default new Router({
         {
           path: 'map',
           component: () => import('@/views/graph')
+        },
+        {
+          path: 'history',
+          component: () => import('@/views/history')
         }
       ]
     },
