@@ -10,7 +10,14 @@ const service = axios.create({
 
 // request interceptor
 service.interceptors.request.use(
-
+  config => {
+    config.headers['Content-Type'] = 'application/json;' // 关键所在
+    return config
+  },
+  error => {
+    console.log(error) // for debug
+    Promise.reject(error)
+  }
 )
 
 // response interceptor

@@ -10,7 +10,20 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    // proxyTable: {},
+    proxy: { //开发环境代理配置
+      // '/dev-api': {
+      [process.env.VUE_APP_BASE_API]: { //匹配以此开头的请求
+          target: process.env.VUE_APP_SERVICE_URL,
+          // 开启代理：在本地会创建一个虚拟服务端，然后发送请求的数据
+          // 同时接收请求的数据，这样服务端和服务端进行数据的交互就不会有跨域问题
+          changeOrigin: true, // 开启代理服务器，
+          pathRewrite: {
+              // /dev-api/db.json最终会发送到http://localhost8080/db.json
+              // '^/dev-api':'',
+              ['^' + process.env.VUE_APP_BASE_API]: ''
+          }
+      }
+  },
 
     // Various Dev Server settings
     host: '127.0.0.1', // can be overwritten by process.env.HOST
