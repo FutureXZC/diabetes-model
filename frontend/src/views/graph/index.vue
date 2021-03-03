@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'map',
+  name: 'graph',
   mounted(){
     const oIframe = document.getElementById('show-iframe');
     const deviceWidth = document.documentElement.clientWidth;

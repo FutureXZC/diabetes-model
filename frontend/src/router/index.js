@@ -22,7 +22,7 @@ export default new Router({
         },
         {
           path: 'map',
-          component: () => import('@/views/map')
+          component: () => import('@/views/graph')
         }
       ]
     },

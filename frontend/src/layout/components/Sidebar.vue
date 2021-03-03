@@ -43,11 +43,13 @@ export default {
     text-align: center;
     line-height: 200px;
   }
-
+  .el-menu {
+    border: 0;
+  }
   .el-menu-item {
     background-color: #444;
     color: #fff;
-    border: #444;
+    /* border: #444; */
   }
 
   .el-container:nth-child(5) .el-aside,
