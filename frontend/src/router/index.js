@@ -21,7 +21,7 @@ export default new Router({
           component: () => import('@/views/predict')
         },
         {
-          path: 'map',
+          path: 'graph',
           component: () => import('@/views/graph')
         },
         {
