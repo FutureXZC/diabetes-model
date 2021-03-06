@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import configure as config
 
 
 class TextCNN(nn.Module):
@@ -47,15 +46,3 @@ class TextCNN(nn.Module):
         # 24]，而是把x中的一些神经元的数据根据概率全部变成了0，维度依旧是[128,48]
         logits = self.fc(x)  # 全接连层 例：输入x是[128,48] 输出logits是[128,10]
         return logits
-
-
-textcnn_model = TextCNN(class_num=config.class_num,
-                        filter_sizes=config.filter_size,
-                        filter_num=config.filter_num,
-                        vocabulary_size=config.vocab_size,
-                        embedding_dimension=config.embedding_dim,
-                        vectors=config.vectors,
-                        dropout=config.dropout)
-
-if __name__ == '__main__':
-    print("model")
