@@ -189,7 +189,8 @@ export default {
       for (let key in this.form) {
         formData[key] = this.form[key]
       }
-      console.log(formData);
+      // console.log(formData);
+      let _this = this
       if (this.isExam == '是' && this.isDesc == '是') {
         // analysisDouble(formData).then(res => {
         //   console.log(res.data)
@@ -199,7 +200,6 @@ export default {
         //   });
         //   this.isDisabled = false
         // })
-        let _this = this
         fetch('http://127.0.0.1:3000/process/analysisDouble', {
           method: 'post',
           body: JSON.stringify(formData),
@@ -249,7 +249,6 @@ export default {
       this.isDesc = '是'
       this.isExam = '是'
       this.$refs[formName].resetFields();
-      console.log(this)
     }
   }
 }

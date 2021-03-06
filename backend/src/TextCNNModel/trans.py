@@ -86,4 +86,4 @@ if __name__ == '__main__':
     #path = r".\indicators.json"
     #text = generate_text("身体不舒服", 40, '男', path)
     text = generate_text(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-    print(text)
+    # print(text)

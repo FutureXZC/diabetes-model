@@ -1,3 +1,3 @@
-stop_path = r'D:\Resource\PycharmProjects\Probability\resource\stopwords.txt'
-model_path = r'D:\Resource\PycharmProjects\Probability\resource\model.pt'
-vocab_path = r"D:\Resource\PycharmProjects\Probability\resource\vocab.json"
+stop_path = r'.\src\TextCNNModel\resource\stopwords.txt'
+model_path = r'.\src\TextCNNModel\resource\model.pt'
+vocab_path = r'.\src\TextCNNModel\resource\vocab.json'

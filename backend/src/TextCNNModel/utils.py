@@ -46,7 +46,14 @@ def seq_to_vec(sequence, path):
     vocab = load_vocab(path)
     words = cut(sequence)
     for word in words:
-        vector.append(vocab[word])
+        if word in vocab.keys():
+            vector.append(vocab[word])
+        else:
+            vector.append(vocab["<unk>"])  # 该词未在语料库中出现
+    #  保证转换后的向量维度不小于5
+    if len(vector) < 5:
+        for i in range(len(vector), 5):
+            vector.append(vocab['<pad>'])
     return vector
 
 
