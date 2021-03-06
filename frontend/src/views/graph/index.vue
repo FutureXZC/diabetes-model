@@ -1,5 +1,5 @@
 <template>
-<iframe id="show-iframe"  frameborder=0 scrolling=auto src="http://127.0.0.1:3000/map"></iframe>
+<iframe id="show-iframe"  frameborder=0 scrolling=auto src="http://127.0.0.1:3000/graph"></iframe>
 </template>
 
 <script>

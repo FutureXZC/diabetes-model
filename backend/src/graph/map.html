@@ -6,10 +6,10 @@
     <title>Document</title>
     <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
     <script src="http://cdn.bootcss.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <script src="http://127.0.0.1:3000/map/getGraph"></script>
-    <script src="http://127.0.0.1:3000/map/getConvertPinyin"></script>
+    <script src="http://127.0.0.1:3000/graph/getGraph"></script>
+    <script src="http://127.0.0.1:3000/graph/getConvertPinyin"></script>
     <link href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="http://127.0.0.1:3000/map/getCss"/>
+    <link rel="stylesheet" href="http://127.0.0.1:3000/graph/getCss"/>
 </head>
 <body>
     <div class="total_left">
@@ -61,7 +61,7 @@
 
         var graph;
 
-        d3.json("http://127.0.0.1:3000/map/getJson", function (error, data) {
+        d3.json("http://127.0.0.1:3000/graph/getJson", function (error, data) {
             if (error) throw error;
             graph = data;
             // console.log(graph);

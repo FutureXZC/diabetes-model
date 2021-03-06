@@ -9,7 +9,7 @@
         <i class="el-icon-data-line"></i>
         <span slot="title">病情预测</span>
       </el-menu-item>
-      <el-menu-item index="2" @click="goTo('map')">
+      <el-menu-item index="2" @click="goTo('graph')">
         <i class="el-icon-info"></i>
         <span slot="title">知识图谱</span>
       </el-menu-item>
