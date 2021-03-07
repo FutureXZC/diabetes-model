@@ -2,7 +2,6 @@ var express = require('express')
 var router = express.Router()
 var child_process = require('child_process')
 var fs = require('fs');
-var sqlite3 = require("sqlite3").verbose();
 const sqlTools = require('../src/utils/sqlTools')
  
 router.post('/saveExam', (req, res) => {
@@ -64,7 +63,5 @@ router.post('/analysis', (req, res) => {
     }
   })
 })
-
-
 
 module.exports = router

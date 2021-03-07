@@ -7,8 +7,8 @@ function sqlInsert(formData, data) {
         if (err) throw err
     })
     let timeCur = timeTools.getCurDate()
-    let sql = "INSERT INTO `history`(`time`, `desc`, `is_desc`, `name`, `result`) VALUES (?, ?, ?, ?, ?);"
-    let obj = [timeCur, formData['desc'], formData['isExam'] == '是' ? 1 : 0, formData['name'], parseFloat(data)]
+    let sql = "INSERT INTO `history`(`time`, `desc`, `isDesc`, `isExam`, `prob`) VALUES (?, ?, ?, ?, ?);"
+    let obj = [timeCur, formData['desc'], formData['isExam'] == '是' ? 1 : 0, formData['isExam'], parseFloat(data)]
     db.run(sql, obj, (err) => {
         if (err) {
             flag = false
@@ -18,7 +18,7 @@ function sqlInsert(formData, data) {
             console.log('判定记录存储成功！')
         }
     })
-    sql = "INSERT INTO `exam`(`name`, `time`, `years`, `sex`, \
+    sql = "INSERT INTO `exam`(`name`, `time`, `age`, `sex`, \
         `thxhdb`, `gaxztm`, `rstqm`, `dmdzdb`, `qbdb`, `ns1`, `ns2`, `zdgc`, `zdzs`, `zdhs`, `zdb`, `qdb`, `gysz`, `bqb`, `bdb`, `zjdhs`, `jxlsm`, `jg`, `jsjm`, `djzm`, `zdba`, `ptt`, `zzdba1`, `zzdbb`, `jjdhs`, `gmdzdb`) \
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
     obj = [formData['name'], 
