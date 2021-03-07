@@ -204,7 +204,7 @@ export default {
           method: 'post',
           body: JSON.stringify(formData),
           headers: { 'Content-Type': 'application/json' }
-        }).then(res => { return res.json(); }).then(res => {
+        }).then(res => { return res.text() }).then(res => {
           console.log(res)
           let msg = '根据体检数据和症状描述分析，患者患糖尿病的概率为<strong><i>' + res + '<i></strong>。'
           _this.$alert(msg, '判定结果', {
@@ -217,7 +217,7 @@ export default {
           method: 'post',
           body: JSON.stringify(formData),
           headers: { 'Content-Type': 'application/json' }
-        }).then(res => { return res.json(); }).then(res => {
+        }).then(res => { return res.text() }).then(res => {
           console.log(res)
           let msg = '根据症状描述分析，患者患糖尿病的概率为<strong><i>' + res + '<i></strong>。'
           _this.$alert(msg, '判定结果', {
@@ -230,7 +230,7 @@ export default {
           method: 'post',
           body: JSON.stringify(formData),
           headers: { 'Content-Type': 'application/json' }
-        }).then(res => { return res.json(); }).then(res => {
+        }).then(res => { return res.text() }).then(res => {
           console.log(res)
           let msg = '根据体检数据分析，患者患糖尿病的概率为<strong><i>' + res + '<i></strong>。'
           _this.$alert(msg, '判定结果', {
