@@ -83,8 +83,6 @@
 </template>
 
 <script>
-// import { analysisDouble, analysisExam, analysisDesc } from '@/api/analysis'
-
 export default {
   data() {
     return {
@@ -178,7 +176,7 @@ export default {
     this.$notify.info({
       title: '操作指南',
       message: '您可以同时填入症状描述和体检信息，也可以仅填入其中一项数据。点击下方的提交按钮，后台将为您完成疾病的判别。',
-      duration: 0
+      duration: 8000
     });
   },
 
@@ -212,13 +210,11 @@ export default {
           body: JSON.stringify(formData),
           headers: { 'Content-Type': 'application/json' }
         }).then(res => { return res.text() }).then(res => {
-          // console.log(res)
           fetch('http://127.0.0.1:3000/process/analysis', {
             method: 'post',
             body: JSON.stringify(formData),
             headers: { 'Content-Type': 'application/json' }
           }).then(res => { return res.text() }).then(res => {
-            // console.log(res)
             _this.$alert(res, '判定结果', {
               dangerouslyUseHTMLString: true
             });
@@ -231,7 +227,6 @@ export default {
           body: JSON.stringify(formData),
           headers: { 'Content-Type': 'application/json' }
         }).then(res => { return res.text() }).then(res => {
-          // console.log(res)
           _this.$alert(res, '判定结果', {
             dangerouslyUseHTMLString: true
           });

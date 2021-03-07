@@ -29,5 +29,5 @@ if __name__ == '__main__':
     # print(predict(34, '男', seq, ""))
     # print(predict(34, '男', seq, path))
     probability = predict(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-    with open(r'.\src\TextCNNModel\probability.txt', mode='w', encoding="utf-8") as f:
+    with open(r'.\src\DhCNNModel\probability.txt', mode='w', encoding="utf-8") as f:
         f.write(str(probability))

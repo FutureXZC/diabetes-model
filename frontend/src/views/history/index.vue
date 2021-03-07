@@ -71,7 +71,6 @@
                 :label="item[0]" 
                 width="150"
               ></el-table-column>
-              <!-- <el-table-column property="time" label="体检指标2" width="150"></el-table-column> -->
             </el-table>
           </el-dialog>
           <el-button

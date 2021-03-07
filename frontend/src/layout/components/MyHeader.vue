@@ -1,5 +1,5 @@
 <template>
-  <div class="myHeader">糖尿病病情预测系统</div>
+  <div class="myHeader">基于多模态数据的糖尿病诊疗系统</div>
 </template>
 
 <script>

@@ -6,7 +6,7 @@ const sqlTools = require('../src/utils/sqlTools')
  
 router.post('/saveExam', (req, res) => {
   let exam = JSON.stringify(req.body.exam)
-   fs.writeFile('./src/TextCNNModel/temp.json', exam, (err) => {
+   fs.writeFile('./src/DhCNNModel/temp.json', exam, (err) => {
     if (err) throw err
     console.log('JSON saved complete.')
   })
@@ -19,20 +19,20 @@ router.post('/analysis', (req, res) => {
   let flag = 0
   if (formData['isExam'] == '是' && formData['isDesc'] == '是') {
     flag = 2
-    testCommand = ['python ./src/TextCNNModel/test.py ',
+    testCommand = ['python ./src/DhCNNModel/test.py ',
                       formData['age'], ' ',
                       formData['sex'], ' ',
                       formData['desc'], ' ',
-                      './src/TextCNNModel/temp.json'].join('')
+                      './src/DhCNNModel/temp.json'].join('')
   } else if (formData['isExam'] == '是') {
     flag = 1
-    testCommand = ['python ./src/TextCNNModel/test.py ',
+    testCommand = ['python ./src/DhCNNModel/test.py ',
                       formData['age'], ' ',
                       formData['sex'], ' ',
                       '""', ' ',
-                      './src/TextCNNModel/temp.json'].join('')
+                      './src/DhCNNModel/temp.json'].join('')
   } else {
-    testCommand = ['python ./src/TextCNNModel/test.py ',
+    testCommand = ['python ./src/DhCNNModel/test.py ',
                       formData['age'], ' ',
                       formData['sex'], ' ',
                       formData['desc'], ' ',
@@ -46,7 +46,7 @@ router.post('/analysis', (req, res) => {
       return
     }
     // 导出判定结果到临时文件
-    var data = fs.readFileSync('./src/TextCNNModel/probability.txt', 'utf8');
+    var data = fs.readFileSync('./src/DhCNNModel/probability.txt', 'utf8');
     prob = data.substring(2, 4) + '.' + data.substring(4, 6) + '%'
     console.log(prob)
     // 将本次判定记录到数据库
