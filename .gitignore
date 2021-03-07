@@ -14,3 +14,4 @@ yarn-error.log*
 *.njsproj
 *.sln
 backend/src/TextCNNModel/temp.json
+backend/src/TextCNNModel/probability.txt

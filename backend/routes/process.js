@@ -45,7 +45,8 @@ router.post('/analysis', (req, res) => {
       return
     }
     var data = fs.readFileSync('./src/TextCNNModel/probability.txt', 'utf8');
-    prob = (data * 1).toFixed(4) * 100 + '%'
+    // prob = (data * 1).toFixed(4) * 100 + '%'
+    prob = data.substring(2, 4) + '.' + data.substring(4, 6) + '%'
     console.log(prob)
     if (flag == 2) {
       res.send('根据体检数据和症状描述分析，患者患糖尿病的概率为<strong><i>' + prob + '<i></strong>。')
