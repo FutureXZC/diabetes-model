@@ -38,7 +38,7 @@
       </el-row>
 
       <el-row>
-        <el-form-item label="症状描述" :prop="form.desc" v-show="isDescShow">
+        <el-form-item label="症状描述" :prop="form.desc" v-show="isDescShow" :rules="[ { required: true } ]">
           <el-input 
             type="textarea" 
             v-model="form.desc" 
@@ -178,12 +178,26 @@ export default {
     this.$notify.info({
       title: '操作指南',
       message: '您可以同时填入症状描述和体检信息，也可以仅填入其中一项数据。点击下方的提交按钮，后台将为您完成疾病的判别。',
-      duration: 8000
+      duration: 0
     });
   },
 
   methods: {
     onSubmit() {
+      if (this.form.name == '') {
+        this.$message({
+          message: '请输入姓名！',
+          type: 'warning'
+        });
+        return
+      } else if (this.isDesc == '是' && this.form.desc == '') {
+        this.$message({
+          message: '请输入症状描述！若不想输入症状可以点击按钮选“否”。',
+          type: 'warning',
+          duration: 5000
+        });
+        return
+      }
       this.isDisabled = true
       let formData = {}
       for (let key in this.form) {
