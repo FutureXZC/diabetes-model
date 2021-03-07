@@ -4,15 +4,15 @@
 
       <el-row>
         <el-form-item label="姓名" :rules="[ { required: true } ]">
-          <el-input v-model="form.name"></el-input>
+          <el-input v-model="form.name" :disabled="isDisabled"></el-input>
         </el-form-item>
       </el-row>
 
       <el-row>
         <el-form-item label="性别" :rules="[ { required: true } ]">
           <el-radio-group v-model="form.sex" :disabled="isDisabled">
-            <el-radio-button label="男"></el-radio-button>
-            <el-radio-button label="女"></el-radio-button>
+            <el-radio-button label="男" :disabled="isDisabled"></el-radio-button>
+            <el-radio-button label="女" :disabled="isDisabled"></el-radio-button>
           </el-radio-group>
         </el-form-item>
       </el-row>
@@ -31,8 +31,8 @@
       <el-row>
         <el-form-item label="是否填写症状描述" :prop="isDesc">
           <el-radio-group v-model="isDesc" :disabled="isDescDisable">
-            <el-radio-button label="是"></el-radio-button>
-            <el-radio-button label="否"></el-radio-button>
+            <el-radio-button label="是" :disabled="isDisabled"></el-radio-button>
+            <el-radio-button label="否" :disabled="isDisabled"></el-radio-button>
           </el-radio-group>
         </el-form-item>
       </el-row>
@@ -53,8 +53,8 @@
       <el-row>
         <el-form-item label="是否填写体检数据" :prop="isExam">
           <el-radio-group v-model="isExam" :disabled="isExamDisable">
-            <el-radio-button label="是"></el-radio-button>
-            <el-radio-button label="否"></el-radio-button>
+            <el-radio-button label="是" :disabled="isDisabled"></el-radio-button>
+            <el-radio-button label="否" :disabled="isDisabled"></el-radio-button>
           </el-radio-group>
         </el-form-item>
       </el-row>
@@ -73,8 +73,8 @@
 
       <el-row>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">开始判定</el-button>
-          <el-button @click="resetForm('form')">重置</el-button>
+          <el-button type="primary" @click="onSubmit" :disabled="isDisabled">开始判定</el-button>
+          <el-button @click="resetForm('form')" :disabled="isDisabled">重置</el-button>
         </el-form-item>
       </el-row>
       
@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import { analysisDouble, analysisExam, analysisDesc } from '@/api/analysis'
+// import { analysisDouble, analysisExam, analysisDesc } from '@/api/analysis'
 
 export default {
   data() {
@@ -189,51 +189,36 @@ export default {
       for (let key in this.form) {
         formData[key] = this.form[key]
       }
-      // console.log(formData);
+      formData['isDesc'] = this.isDesc
+      formData['isExam'] = this.isExam
       let _this = this
-      if (this.isExam == '是' && this.isDesc == '是') {
-        // analysisDouble(formData).then(res => {
-        //   console.log(res.data)
-        //   let msg = '该症状下患糖尿病的概率为<strong><i>' + res.data + '<i></strong>。'
-        //   this.$alert(msg, '判定结果', {
-        //     dangerouslyUseHTMLString: true
-        //   });
-        //   this.isDisabled = false
-        // })
-        fetch('http://127.0.0.1:3000/process/analysisDouble', {
+      if (this.isExam == '是') {
+        fetch('http://127.0.0.1:3000/process/saveExam', {
           method: 'post',
           body: JSON.stringify(formData),
           headers: { 'Content-Type': 'application/json' }
         }).then(res => { return res.text() }).then(res => {
-          console.log(res)
-          let msg = '根据体检数据和症状描述分析，患者患糖尿病的概率为<strong><i>' + res + '<i></strong>。'
-          _this.$alert(msg, '判定结果', {
-            dangerouslyUseHTMLString: true
-          });
-          _this.isDisabled = false
-        })
-      } else if (this.isDesc == '是') {
-        fetch('http://127.0.0.1:3000/process/analysisDesc', {
-          method: 'post',
-          body: JSON.stringify(formData),
-          headers: { 'Content-Type': 'application/json' }
-        }).then(res => { return res.text() }).then(res => {
-          console.log(res)
-          let msg = '根据症状描述分析，患者患糖尿病的概率为<strong><i>' + res + '<i></strong>。'
-          _this.$alert(msg, '判定结果', {
-            dangerouslyUseHTMLString: true
-          });
-          _this.isDisabled = false
+          // console.log(res)
+          fetch('http://127.0.0.1:3000/process/analysis', {
+            method: 'post',
+            body: JSON.stringify(formData),
+            headers: { 'Content-Type': 'application/json' }
+          }).then(res => { return res.text() }).then(res => {
+            // console.log(res)
+            _this.$alert(res, '判定结果', {
+              dangerouslyUseHTMLString: true
+            });
+            _this.isDisabled = false
+          })
         })
       } else {
-        fetch('http://127.0.0.1:3000/process/analysisExam', {
+        fetch('http://127.0.0.1:3000/process/analysis', {
           method: 'post',
           body: JSON.stringify(formData),
           headers: { 'Content-Type': 'application/json' }
         }).then(res => { return res.text() }).then(res => {
-          console.log(res)
-          let msg = '根据体检数据分析，患者患糖尿病的概率为<strong><i>' + res + '<i></strong>。'
-          _this.$alert(msg, '判定结果', {
+          // console.log(res)
+          _this.$alert(res, '判定结果', {
             dangerouslyUseHTMLString: true
           });
           _this.isDisabled = false

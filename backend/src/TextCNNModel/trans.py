@@ -4,8 +4,6 @@ import json
 
 def generate_text(content, age, sex, path):
     age = int(age)
-    with open(path, encoding="utf-8") as f:
-        indicators = json.load(f)
     # 年龄段
     age_group = {"婴幼儿": 6, "少儿": 12, "青少年": 17, "青年": 45, "中年": 69, "老年": 1e7}
     # 体检指标阈值
@@ -74,16 +72,20 @@ def generate_text(content, age, sex, path):
     else:
         content = "女性" + content
     # 判断各项指标
-    for key, value in metrics.items():
-        if indicators[d[key]] < value[0]:
-            content = key + "偏低" + content
-        elif indicators[d[key]] > value[1]:
-            content = key + "超标" + content
+    if path != "":
+        with open(path, encoding="utf-8") as f:
+            indicators = json.load(f)
+        for key, value in metrics.items():
+            if indicators[d[key]] < value[0]:
+                content = key + "偏低" + content
+            elif indicators[d[key]] > value[1]:
+                content = key + "超标" + content
     return content
 
 
 if __name__ == '__main__':
-    #path = r".\indicators.json"
-    #text = generate_text("身体不舒服", 40, '男', path)
-    text = generate_text(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
-    # print(text)
+    path = r".\indicators.json"
+    seq = "中年男性"
+    text = generate_text("身体不舒服", 40, '男', "")
+    # text = generate_text(sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4])
+    print(text)

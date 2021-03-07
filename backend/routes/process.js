@@ -2,88 +2,58 @@ var express = require('express')
 var router = express.Router()
 var child_process = require('child_process')
 var fs = require('fs')
-var PythonShell = require('python-shell');
 
-function combined(desc, sex, age) {
-  let age_group = {"婴幼儿": 6, "少儿": 12, "青少年": 17, "青年": 45, "中年": 69, "老年": 1e7}
-  if (sex == '男') {
-    desc = '男性' + desc
+router.post('/saveExam', (req, res) => {
+  let exam = JSON.stringify(req.body.exam)
+   fs.writeFile('./src/TextCNNModel/temp.json', exam, (err) => {
+    if (err) throw err
+    console.log('JSON saved complete.')
+  })
+  res.status(200).send('JSON saved complete.')
+})
+
+router.post('/analysis', (req, res) => {
+  let formData = req.body
+  let testCommand = ''
+  let flag = 0
+  if (formData['isExam'] == '是' && formData['isDesc'] == '是') {
+    flag = 2
+    testCommand = ['python ./src/TextCNNModel/test.py ',
+                      formData['age'], ' ',
+                      formData['sex'], ' ',
+                      formData['desc'], ' ',
+                      './src/TextCNNModel/temp.json'].join('')
+  } else if (formData['isExam'] == '是') {
+    flag = 1
+    testCommand = ['python ./src/TextCNNModel/test.py ',
+                      formData['age'], ' ',
+                      formData['sex'], ' ',
+                      '""', ' ',
+                      './src/TextCNNModel/temp.json'].join('')
   } else {
-    desc = '女性' + desc
+    testCommand = ['python ./src/TextCNNModel/test.py ',
+                      formData['age'], ' ',
+                      formData['sex'], ' ',
+                      formData['desc'], ' ',
+                      '""'].join('')
   }
-  for (x in age_group) {
-    if (age_group[x] > age) {
-      desc = x + '，' + desc
-      break
-    }
-  }
-  return desc
-}
-
-router.post('/analysisDouble', (req, res) => {
-  let formData = req.body
-  let exam = JSON.stringify(formData['exam'])
-  // fs.writeFile('./src/TextCNNModel/temp.json', exam, (err) => {
-  //   if (err) throw err
-  // });
-  let testCommand = ['python ./src/TextCNNModel/test.py ',
-                    formData['age'], ' ',
-                    formData['sex'], ' ',
-                    formData['desc'], ' ',
-                    './src/TextCNNModel/temp.json'].join('')
-  // console.log(testCommand)
-  // child_process.exec('python ./src/TextCNNModel/mock.py', function(error, stdout, stderr){
-  //   if(error) {
-  //       console.error('error: ' + error)
-  //       res.status(501).send('content提取出错！')
-  //       return
-  //   }
-  //   let tempData = ''
-  //   // fs.readFile('./src/TextCNNModel/res.txt', (data, err) => {
-  //   //   if (err) throw err
-  //   //   // console.log(data)
-  //   //   tempData = data
-  //   // });
-  //   res.send(tempData)
-  // })
-  // var spawn = require('child_process').spawn,
-  // ls = spawn('python', ['./src/TextCNNModel/test.py', formData['age'], formData['sex'], formData['desc'], './src/TextCNNModel/temp.json']);
-
-  // ls.stdout.on('data', function(data) {
-  //     console.log('stdout: ' + data);
-  // });
-
-  // ls.stderr.on('data', function(data) {
-  //     console.log('stderr: ' + data);
-  // });
-
-  // ls.on('close', function(code) {
-  //     console.log('child process exited with code ' + code);
-  // });
-  res.send('111')
-})
-
-router.post('/analysisExam', (req, res) => {
-  res.send('exam')
-})
-
-router.post('/analysisDesc', (req, res) => {
-  let formData = req.body
-  let testCommand = ['python ./src/TextCNNModel/test.py ',
-                    formData['age'], ' ',
-                    formData['sex'], ' ',
-                    formData['desc'], ' ',
-                    '""'].join('')
   console.log(testCommand)
   child_process.exec(testCommand, function(error, stdout, stderr){
     if(error) {
-        console.error('error: ' + error)
-        res.status(501).send('content提取出错！')
-        return
-    }    
+      console.error('error: ' + error)
+      res.status(501).send('后台提取数据出错，请将表单填写完整！')
+      return
+    }
     var data = fs.readFileSync('./src/TextCNNModel/probability.txt', 'utf8');
-    console.log(data);
-    res.send(data)
+    prob = (data * 1).toFixed(4) * 100 + '%'
+    console.log(prob)
+    if (flag == 2) {
+      res.send('根据体检数据和症状描述分析，患者患糖尿病的概率为<strong><i>' + prob + '<i></strong>。')
+    } else if (flag == 1) {
+      res.send('根据体检数据分析，患者患糖尿病的概率为<strong><i>' + prob + '<i></strong>。')
+    } else {
+      res.send('根据症状描述分析，患者患糖尿病的概率为<strong><i>' + prob + '<i></strong>。')
+    }
   })
 })
 
