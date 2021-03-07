@@ -1,8 +1,10 @@
 var express = require('express')
 var router = express.Router()
 var child_process = require('child_process')
-var fs = require('fs')
-
+var fs = require('fs');
+var sqlite3 = require("sqlite3").verbose();
+const sqlTools = require('../src/utils/sqlTools')
+ 
 router.post('/saveExam', (req, res) => {
   let exam = JSON.stringify(req.body.exam)
    fs.writeFile('./src/TextCNNModel/temp.json', exam, (err) => {
@@ -44,10 +46,15 @@ router.post('/analysis', (req, res) => {
       res.status(501).send('后台提取数据出错，请将表单填写完整！')
       return
     }
+    // 导出判定结果到临时文件
     var data = fs.readFileSync('./src/TextCNNModel/probability.txt', 'utf8');
-    // prob = (data * 1).toFixed(4) * 100 + '%'
     prob = data.substring(2, 4) + '.' + data.substring(4, 6) + '%'
     console.log(prob)
+    // 将本次判定记录到数据库
+    if (!sqlTools.sqlInsert(formData, data)) {
+      console.log('数据库存储失败！')
+    }
+    // 返回判定结果
     if (flag == 2) {
       res.send('根据体检数据和症状描述分析，患者患糖尿病的概率为<strong><i>' + prob + '<i></strong>。')
     } else if (flag == 1) {
@@ -57,5 +64,7 @@ router.post('/analysis', (req, res) => {
     }
   })
 })
+
+
 
 module.exports = router
