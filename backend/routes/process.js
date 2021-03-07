@@ -50,7 +50,7 @@ router.post('/analysis', (req, res) => {
     prob = data.substring(2, 4) + '.' + data.substring(4, 6) + '%'
     console.log(prob)
     // 将本次判定记录到数据库
-    if (!sqlTools.sqlInsert(formData, data)) {
+    if (!sqlTools.sqlInsert(formData, data, flag)) {
       console.log('数据库存储失败！')
     }
     // 返回判定结果
