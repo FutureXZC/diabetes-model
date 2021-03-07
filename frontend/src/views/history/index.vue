@@ -12,6 +12,11 @@
         width="180">
       </el-table-column>
       <el-table-column
+        prop="name"
+        label="姓名"
+        width="180">
+      </el-table-column>
+      <el-table-column
         prop="isDesc"
         label="是否输入症状描述"
         width="180">
@@ -49,7 +54,6 @@
                 ? 'primary' : 'success'" disable-transitions>{{scope.row.level}}</el-tag>
             </div>
           </el-popover>
-          
         </template>
       </el-table-column>
       <el-table-column 
@@ -84,14 +88,7 @@
 export default {
     data () {
       return {
-        tableData: [{
-          time: '2016-05-02 22:46:10',
-          isDesc: '是',
-          desc: '头痛脚痛全身痛头痛脚痛全身痛头痛脚痛全身痛头痛脚痛全身痛头痛脚痛全身痛',
-          isExam: '否',
-          prob: '20%',
-          level: '低'
-        }],
+        tableData: [],
         dialogTableVisible: false,
         gridData: [{
           name: '',
@@ -161,46 +158,60 @@ export default {
     },
 
     created () {
-      fetch('http://127.0.0.1:3000/sql/getList', {
-        method: 'post',
-      }).then(res => { return res.json() }).then(res => {
-        let tmp = {}
-        for (let i = 0; i < 15; i++) {
-          console.log(res[i])
-          tmp['time'] = res[i]['time']
-          tmp['isDesc'] = res[i]['isDesc'] == 1 ? '是' : '否'
-          tmp['desc'] = res[i]['desc']
-          tmp['isExam'] = res[i]['isExam'] == 1 ? '是' : '否'
-          tmp['prob'] = res[i]['prob']
-          tmp['level'] = tmp['prob'] > 0.3 ? (tmp['prob'] > 0.6 ? '高' : '中') : '低'
-          this.tableData.push(tmp)
-          tmp = {}
-        }
-        console.log(this.tableData)
-      })
+      this.getBaseList()
     },
     
     methods: {
+      getBaseList() {
+        fetch('http://127.0.0.1:3000/sql/getList', {
+          method: 'post',
+        }).then(res => { return res.json() }).then(res => {
+          let tmp = {}
+          for (let i = 0; i < 15; i++) {
+            tmp['time'] = res[i]['time']
+            tmp['name'] = res[i]['name']
+            tmp['isDesc'] = res[i]['isDesc'] == 1 ? '是' : '否'
+            tmp['desc'] = res[i]['desc']
+            tmp['isExam'] = res[i]['isExam'] == 1 ? '是' : '否'
+            tmp['prob'] = res[i]['prob']
+            tmp['level'] = tmp['prob'] > 0.3 ? (tmp['prob'] > 0.6 ? '高' : '中') : '低'
+            this.tableData.push(tmp)
+            tmp = {}
+          }
+        })
+      },
+
       handleDetail(index, row) {
         if (row['isExam'] == '否') {
           this.$alert('该患者没有输入体检数据。', '体检数据', {});
           return
         }
-        let _this = this
         fetch('http://127.0.0.1:3000/sql/getExam', {
           method: 'post',
           body: JSON.stringify({'time': row['time']}),
           headers: { 'Content-Type': 'application/json' }
         }).then(res => { return res.json() }).then(res => {
-          console.log(res)
           for (let key in res[0]) {
-            _this.gridData[0][key] = res[0][key]
+            this.gridData[0][key] = res[0][key]
           }
           this.dialogTableVisible = true
         })
       },
+
       handleDelete(index, row) {
-        console.log(index, row)
+        fetch('http://127.0.0.1:3000/sql/deleteHis', {
+          method: 'post',
+          body: JSON.stringify({'time': row['time'], 'isExam': row['isExam']}),
+          headers: { 'Content-Type': 'application/json' }
+        }).then(res => { return res.json() }).then(res => {
+          if (res['code'] == 200) {
+            this.$alert(res['msg'], '操作结果', {});
+            this.tableData.splice(index, 1)
+            this.getBaseList()
+          } else {
+            this.$alert(res['msg'], '操作结果', {});
+          }
+        })
       }
     }
 }
