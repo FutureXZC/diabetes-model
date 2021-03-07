@@ -1,7 +1,7 @@
 <template>
   <el-aside width="200px">
     <el-menu
-    default-active="1"
+    :default-active="isActive"
     class="el-menu-vertical-demo"
     @open="handleOpen"
     @close="handleClose">
@@ -24,6 +24,19 @@
 <script>
 export default {
   name: 'Sidebar',
+
+  computed: {
+    isActive () {
+      if (this.$route.path == '/predict') {
+        return "1"
+      } else if (this.$route.path == '/graph') {
+        return "2"
+      } else {
+        return "3"
+      }
+    },
+  },
+
   methods: {
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -34,6 +47,7 @@ export default {
     },
 
     goTo(index) {
+      console.log(this.$route.path)
       this.$router.push(index)
     }
   },
@@ -53,7 +67,6 @@ export default {
   .el-menu-item {
     background-color: #444;
     color: #fff;
-    /* border: #444; */
   }
 
   .el-container:nth-child(5) .el-aside,
