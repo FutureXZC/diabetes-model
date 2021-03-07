@@ -13,7 +13,11 @@ cd backend
 npm install
 npm run dev
 
-# model
+# model is based on anaconda3 environment
+# if used base env, you need to use root access
+conda install pytorch=1.6.0
+pip3 install jieba
+conda install torchtext=0.6.0
 ```
 
 更多详情，请参考官方文档:  
