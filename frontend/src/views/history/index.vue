@@ -182,7 +182,7 @@ export default {
             tmp['desc'] = res[i]['desc']
             tmp['isExam'] = res[i]['isExam'] == 1 ? '是' : '否'
             tmp['prob'] = (res[i]['prob'] * 100).toFixed(2) + '%'
-            tmp['level'] = res[i]['prob'] > 0.3 ? (tmp['prob'] > 0.6 ? '高' : '中') : '低'
+            tmp['level'] = res[i]['prob'] > 0.3 ? (res[i]['prob'] > 0.6 ? '高' : '中') : '低'
             this.tableData.push(tmp)
             tmp = {}
           }
