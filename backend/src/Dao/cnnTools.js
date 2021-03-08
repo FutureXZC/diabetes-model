@@ -46,8 +46,8 @@ function exceQuery(formData) {
     }
     console.log(testCommand)
     return new Promise(function(resolve, reject) {
-        child_process.exec(testCommand, function(error, stdout, stderr){
-            if (error) {
+        child_process.exec(testCommand, function(err, stdout, stderr){
+            if (err) {
                 reject("Read error: " + err.message)
             }else {
                 // 导出判定结果到临时文件
