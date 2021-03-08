@@ -7,12 +7,12 @@ def generate_text(content, age, sex, path):
     # 年龄段
     age_group = {"婴幼儿": 6, "少儿": 12, "青少年": 17, "青年": 45, "中年": 69, "老年": 1e7}
     # 体检指标阈值
-    metrics = {"糖化血红蛋白": [0.04, 0.06],
+    metrics = {"糖化血红蛋白": [4.27, 6.07],
                "γ-谷氨酰转肽酶": [10, 60],
                "乳酸脱氢酶": [120, 220],
                "低密度脂蛋白": [0.00, 3.37],
                "前白蛋白": [0.20, 0.40],
-               "尿素": [2.0, 7.1],
+               "尿素": [3.6, 9.5],
                "尿酸": [208, 428],
                "总胆固醇": [2.86, 6.10],
                "总胆汁酸": [0.0, 10.0],
@@ -76,9 +76,7 @@ def generate_text(content, age, sex, path):
         with open(path, encoding="utf-8") as f:
             indicators = json.load(f)
         for key, value in metrics.items():
-            if indicators[d[key]] < value[0]:
-                content = key + "偏低" + content
-            elif indicators[d[key]] > value[1]:
+            if indicators[d[key]] > value[1]:
                 content = key + "超标" + content
     return content
 
