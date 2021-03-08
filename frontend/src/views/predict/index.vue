@@ -65,7 +65,7 @@
             v-model="form['exam'][item[1]]" 
             :precision="2" 
             :step="0.1" 
-            :max="10"
+            :min="0"
             :disabled="isDisabled"
           ></el-input-number></div>
         </el-form-item>
