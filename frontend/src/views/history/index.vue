@@ -68,7 +68,12 @@
               <el-table-column 
                 prop="desc" 
                 label="症状描述" 
-                width="600"
+                width="450"
+              ></el-table-column>
+              <el-table-column 
+                prop="prob" 
+                label="患病风险" 
+                width="150"
               ></el-table-column>
             </el-table>
             <el-table :data="gridData">
@@ -96,7 +101,10 @@ export default {
       return {
         tableData: [],
         dialogTableVisible: false,
-        gridDesc: [{desc: ''}],
+        gridDesc: [{
+          desc: '', 
+          prob: ''
+        }],
         gridData: [{
           name: '',
           time: '',
@@ -203,7 +211,7 @@ export default {
             this.gridData[0][key] = res[0][key]
           }
           this.gridDesc[0]['desc'] = row['desc']
-          console.log(this.gridDesc)
+          this.gridDesc[0]['prob'] = row['prob']
           this.dialogTableVisible = true
         })
       },
