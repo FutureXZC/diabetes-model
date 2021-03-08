@@ -43,7 +43,7 @@
       </el-table-column>
       <el-table-column
         prop="level"
-        label="患糖尿病概率"
+        label="患糖尿病风险等级"
         width="180">
         <template slot-scope="scope">
           <el-popover trigger="hover" placement="top">
@@ -64,6 +64,13 @@
             size="mini"
             @click="handleDetail(scope.$index, scope.row)">体检数据</el-button>
           <el-dialog title="体检数据" :visible.sync="dialogTableVisible">
+            <el-table :data="gridDesc">
+              <el-table-column 
+                prop="desc" 
+                label="症状描述" 
+                width="600"
+              ></el-table-column>
+            </el-table>
             <el-table :data="gridData">
               <el-table-column 
                 v-for="(item,i) in metrics" 
@@ -89,6 +96,7 @@ export default {
       return {
         tableData: [],
         dialogTableVisible: false,
+        gridDesc: [{desc: ''}],
         gridData: [{
           name: '',
           time: '',
@@ -165,15 +173,16 @@ export default {
         fetch('http://127.0.0.1:3000/sql/getList', {
           method: 'post',
         }).then(res => { return res.json() }).then(res => {
+          this.tableData = []
           let tmp = {}
-          for (let i = 0; i < 15; i++) {
+          for (let i = res.length - 1; i >= 0 && i >= res.length - 15; i--) {
             tmp['time'] = res[i]['time']
             tmp['name'] = res[i]['name']
             tmp['isDesc'] = res[i]['isDesc'] == 1 ? '是' : '否'
             tmp['desc'] = res[i]['desc']
             tmp['isExam'] = res[i]['isExam'] == 1 ? '是' : '否'
-            tmp['prob'] = res[i]['prob']
-            tmp['level'] = tmp['prob'] > 0.3 ? (tmp['prob'] > 0.6 ? '高' : '中') : '低'
+            tmp['prob'] = (res[i]['prob'] * 100).toFixed(2) + '%'
+            tmp['level'] = res[i]['prob'] > 0.3 ? (tmp['prob'] > 0.6 ? '高' : '中') : '低'
             this.tableData.push(tmp)
             tmp = {}
           }
@@ -193,6 +202,8 @@ export default {
           for (let key in res[0]) {
             this.gridData[0][key] = res[0][key]
           }
+          this.gridDesc[0]['desc'] = row['desc']
+          console.log(this.gridDesc)
           this.dialogTableVisible = true
         })
       },
