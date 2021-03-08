@@ -8,6 +8,7 @@ function sqlInsert(formData, data, flag) {
  * @param {formData} 包含患者个人信息、症状描述和体检数据，JSON
  * @param {data} 患者患病概率，float
  * @param {flag} 是否输入体检数据，boolean
+ * @returns {isSuccess} 是否插入成功的标志，boolean
  */
     let isSuccess = true
     let timeCur = timeTools.getCurDate()
@@ -55,13 +56,14 @@ function sqlDelete(examDate, isExam) {
  * 删除指定日期的历史记录和体检数据
  * @param {examDate} 体检日期，string
  * @param {isExam} 是否输入了体检数据，string
+ * @returns {isSuccess} 是否删除成功的标志，boolean
  */
-    let flag = true
+    let isSuccess = true
     let sql = 'delete from history where time = "' + examDate + '";'
     console.log(sql)
     db.run(sql, (err) => {
         if (err) {
-            flag = false
+            isSuccess = false
             console.log(err)
             console.log('删除历史记录失败')
         } else {
@@ -73,7 +75,7 @@ function sqlDelete(examDate, isExam) {
         console.log(sql)
         db.run(sql, (err) => {
             if (err) {
-                flag = false
+                isSuccess = false
                 console.log(err)
                 console.log('删除体检记录失败')
             } else {
@@ -81,7 +83,7 @@ function sqlDelete(examDate, isExam) {
             }
         })
     }
-    return flag
+    return isSuccess
 }
 
 function sqlRun(sql) {

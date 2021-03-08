@@ -84,6 +84,7 @@
 
 <script>
 import { saveExam, analysis } from '@/api/analysis'
+
 export default {
   data() {
     return {

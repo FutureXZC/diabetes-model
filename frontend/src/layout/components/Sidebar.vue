@@ -24,7 +24,6 @@
 <script>
 export default {
   name: 'Sidebar',
-
   computed: {
     isActive () {
       if (this.$route.path == '/predict') {
