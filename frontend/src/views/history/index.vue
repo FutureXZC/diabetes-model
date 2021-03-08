@@ -96,6 +96,8 @@
 </template>
 
 <script>
+import { getList, getExam } from '@/api/sqlTools'
+
 export default {
     data () {
       return {
@@ -178,9 +180,7 @@ export default {
     
     methods: {
       getBaseList() {
-        fetch('http://127.0.0.1:3000/sql/getList', {
-          method: 'post',
-        }).then(res => { return res.json() }).then(res => {
+        getList().then(res => {
           this.tableData = []
           let tmp = {}
           for (let i = res.length - 1; i >= 0 && i >= res.length - 15; i--) {
@@ -202,11 +202,7 @@ export default {
           this.$alert('该患者没有输入体检数据。', '体检数据', {});
           return
         }
-        fetch('http://127.0.0.1:3000/sql/getExam', {
-          method: 'post',
-          body: JSON.stringify({'time': row['time']}),
-          headers: { 'Content-Type': 'application/json' }
-        }).then(res => { return res.json() }).then(res => {
+        getExam({'time': row['time']}).then(res => {
           for (let key in res[0]) {
             this.gridData[0][key] = res[0][key]
           }
@@ -217,11 +213,7 @@ export default {
       },
 
       handleDelete(index, row) {
-        fetch('http://127.0.0.1:3000/sql/deleteHis', {
-          method: 'post',
-          body: JSON.stringify({'time': row['time'], 'isExam': row['isExam']}),
-          headers: { 'Content-Type': 'application/json' }
-        }).then(res => { return res.json() }).then(res => {
+        deleteHis({'time': row['time'], 'isExam': row['isExam']}).then(res => {
           if (res['code'] == 200) {
             this.$alert(res['msg'], '操作结果', {});
             this.tableData.splice(index, 1)

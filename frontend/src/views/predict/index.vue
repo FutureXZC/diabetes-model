@@ -83,6 +83,7 @@
 </template>
 
 <script>
+import { saveExam, analysis } from '@/api/analysis'
 export default {
   data() {
     return {
@@ -205,16 +206,8 @@ export default {
       formData['isExam'] = this.isExam
       let _this = this
       if (this.isExam == '是') {
-        fetch('http://127.0.0.1:3000/process/saveExam', {
-          method: 'post',
-          body: JSON.stringify(formData),
-          headers: { 'Content-Type': 'application/json' }
-        }).then(res => { return res.text() }).then(res => {
-          fetch('http://127.0.0.1:3000/process/analysis', {
-            method: 'post',
-            body: JSON.stringify(formData),
-            headers: { 'Content-Type': 'application/json' }
-          }).then(res => { return res.text() }).then(res => {
+        saveExam(formData).then(res => {
+          analysis(formData).then(res => {
             _this.$alert(res, '判定结果', {
               dangerouslyUseHTMLString: true
             });
@@ -222,11 +215,7 @@ export default {
           })
         })
       } else {
-        fetch('http://127.0.0.1:3000/process/analysis', {
-          method: 'post',
-          body: JSON.stringify(formData),
-          headers: { 'Content-Type': 'application/json' }
-        }).then(res => { return res.text() }).then(res => {
+        analysis(formData).then(res => {
           _this.$alert(res, '判定结果', {
             dangerouslyUseHTMLString: true
           });
