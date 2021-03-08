@@ -15,9 +15,15 @@ npm run dev
 
 # model is based on anaconda3 environment
 # if used base env, you need to use root access
+# Install pytorch 1.6.0
 conda install pytorch=1.6.0
+# Install jieba
 pip3 install jieba
-conda install torchtext=0.6.0
+# Install torchtext 0.6.0
+# Download installation package from: https://github.com/pytorch/text/archive/0.6.0.zip
+# Unzip the compressed package, then run the tow commands followed:
+cd text-0.6.0
+python setup.py install
 ```
 
 更多详情，请参考官方文档:  
