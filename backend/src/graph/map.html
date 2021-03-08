@@ -32,7 +32,6 @@
     </div>
 </body>
 <script>
-    // console.log(window.location.href)
     var names = ['疾病', '症状', '检查', '药物或手术', '非药物/手术治疗', '病因', '多发人群', '类型', '糖尿病',];
     var colors = ['#6ca46c', '#4e88af', '#ca635f', '#d2907c', '#C3D9FF', '#ded295', '#19CAAD', '#f5ccf6', '#c16bfe'];
     for (var i = 0; i < names.length; i++) {
@@ -64,7 +63,6 @@
         d3.json("http://127.0.0.1:3000/graph/getJson", function (error, data) {
             if (error) throw error;
             graph = data;
-            // console.log(graph);
 
             var link = svg.append("g").attr("class", "links")
                 .selectAll("line").data(graph.links)

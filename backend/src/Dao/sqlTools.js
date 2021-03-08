@@ -101,7 +101,7 @@ function sqlRun(sql) {
 
 async function sqlGetAll(sql, res){
 /**
- * 调用sqlRun函数执行sql语句，并通过res将执行结果返回给前端
+ * 解析sqlRun函数执行sql语句的结果，并通过res将执行结果返回给前端
  * @param {sql} 将要执行的sql语句，string
  * @param {res} 响应体对象，object
  */
