@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import { getList, getExam } from '@/api/sqlTools'
+import { getList, getExam, deleteHis } from '@/api/sqlTools'
 
 export default {
     data () {
