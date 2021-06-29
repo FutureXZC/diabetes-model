@@ -1,5 +1,7 @@
 # 智慧医疗-基于多模态数据的糖尿病诊疗系统
 
+区域赛获奖名单：[https://www.dajiangsai.org/news/0427-1000.html](https://www.dajiangsai.org/news/0427-1000.html)
+
 ## 项目目录结构
 
 ```
