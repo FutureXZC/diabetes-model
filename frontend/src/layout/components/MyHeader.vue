@@ -4,16 +4,19 @@
 
 <script>
 export default {
-  name: 'MyHeader'
-}
+  name: "MyHeader"
+};
 </script>
 
-<style>
-  .myHeader {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    line-height: 60px;
-    padding: 0;
-  }
+<style scoped>
+.el-header {
+  padding: 0;
+}
+.myHeader {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  line-height: 60px;
+  padding: 0;
+}
 </style>

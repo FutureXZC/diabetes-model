@@ -1,10 +1,11 @@
 <template>
   <el-aside width="200px">
     <el-menu
-    :default-active="isActive"
-    class="el-menu-vertical-demo"
-    @open="handleOpen"
-    @close="handleClose">
+      :default-active="isActive"
+      class="el-menu-vertical-demo"
+      @open="handleOpen"
+      @close="handleClose"
+    >
       <el-menu-item index="1" @click="goTo('predict')">
         <i class="el-icon-data-line"></i>
         <span slot="title">病情预测</span>
@@ -23,17 +24,17 @@
 
 <script>
 export default {
-  name: 'Sidebar',
+  name: "Sidebar",
   computed: {
-    isActive () {
-      if (this.$route.path == '/predict') {
-        return "1"
-      } else if (this.$route.path == '/graph') {
-        return "2"
+    isActive() {
+      if (this.$route.path == "/predict") {
+        return "1";
+      } else if (this.$route.path == "/graph") {
+        return "2";
       } else {
-        return "3"
+        return "3";
       }
-    },
+    }
   },
 
   methods: {
@@ -46,33 +47,33 @@ export default {
     },
 
     goTo(index) {
-      this.$router.push(index)
+      this.$router.push(index);
     }
-  },
-}
+  }
+};
 </script>
 
-<style>
-  .el-aside {
-    background-color: #444;
-    color: #fff;
-    text-align: center;
-    line-height: 200px;
-  }
-  .el-menu {
-    border: 0;
-  }
-  .el-menu-item {
-    background-color: #444;
-    color: #fff;
-  }
+<style scoped>
+.el-aside {
+  background-color: #444;
+  color: #fff;
+  text-align: center;
+  line-height: 200px;
+}
+.el-menu {
+  border: 0;
+}
+.el-menu-item {
+  background-color: #444;
+  color: #fff;
+}
 
-  .el-container:nth-child(5) .el-aside,
-  .el-container:nth-child(6) .el-aside {
-    line-height: 260px;
-  }
-  
-  .el-container:nth-child(7) .el-aside {
-    line-height: 320px;
-  }
+.el-container:nth-child(5) .el-aside,
+.el-container:nth-child(6) .el-aside {
+  line-height: 260px;
+}
+
+.el-container:nth-child(7) .el-aside {
+  line-height: 320px;
+}
 </style>
